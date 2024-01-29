@@ -20,6 +20,7 @@ class ReportController extends Controller
     public function saleIndex(Request $request)
     {
         $date = $request->has('date') ? $request->date : date('Y-m-d');
+        $endDate = $request->has('endDate') ? $request->endDate : date('Y-m-d');
         $month = $request->has('month') ? $request->month : date('m');
         $year = $request->has('year') ? $request->year : date('Y');
         $selectedReport = $request->has('selectedReport') ? $request->selectedReport : null;
@@ -48,6 +49,15 @@ class ReportController extends Controller
             $categories = $categories->with(['products.saleItems' => function ($query) use ($year) {
                 $query->whereHas('sale', function ($q) use ($year) {
                     $q->whereYear('sale_date', $year);
+                });
+            }]);
+        }
+
+        if ($selectedReport == 4) {
+
+            $categories = $categories->with(['products.saleItems' => function ($query) use ($date, $endDate) {
+                $query->whereHas('sale', function ($q) use ($date, $endDate) {
+                    $q->whereDate('sale_date', '>', $date)->whereDate('sale_date', '<=', $endDate);
                 });
             }]);
         }

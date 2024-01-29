@@ -180,7 +180,7 @@ export default function Checkout({
                                     <div className="mb-2">
                                         <div className="block">
                                             <Label
-                                                htmlFor="c_address"
+                                                htmlFor="reference_no"
                                                 value="Reference No / Cheque No"
                                             />
                                         </div>
@@ -198,6 +198,32 @@ export default function Checkout({
                                                 errors.reference_no && "failure"
                                             }
                                             helperText={errors.reference_no}
+                                        />
+                                    </div>
+                                )}
+
+                                {data.payment_method ==
+                                    "account_receivable" && (
+                                    <div className="mb-2">
+                                        <div className="block">
+                                            <Label
+                                                htmlFor="due_date"
+                                                value="Due Date"
+                                            />
+                                        </div>
+                                        <TextInput
+                                            type="date"
+                                            id="due_date"
+                                            required
+                                            value={data.due_date}
+                                            onChange={(e) => {
+                                                setData(
+                                                    "due_date",
+                                                    e.target.value
+                                                );
+                                            }}
+                                            color={errors.due_date && "failure"}
+                                            helperText={errors.due_date}
                                         />
                                     </div>
                                 )}

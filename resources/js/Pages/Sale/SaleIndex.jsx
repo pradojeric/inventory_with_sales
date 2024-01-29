@@ -334,6 +334,7 @@ export default function SaleIndex({ auth, flash, sales, inputs }) {
                                             </Table.HeadCell>
                                             <Table.HeadCell></Table.HeadCell>
                                             <Table.HeadCell></Table.HeadCell>
+                                            <Table.HeadCell></Table.HeadCell>
                                             <Table.HeadCell>
                                                 <span className="sr-only">
                                                     View

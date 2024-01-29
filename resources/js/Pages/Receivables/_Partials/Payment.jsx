@@ -21,12 +21,9 @@ export default function Payment({
     const { data, setData, reset, clearErrors, put, errors, processing } =
         useForm({
             payment_method: "",
+            paid_date: "",
             reference_no: "",
         });
-
-    useEffect(() => {
-        console.log(sale);
-    }, [show]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -49,6 +46,23 @@ export default function Payment({
                 <form>
                     <div className="p-6 text-gray-900">
                         {sale?.order_no}
+
+                        <div className="mb-2">
+                            <div className="block">
+                                <Label htmlFor="paid_date" value="Date Paid" />
+                            </div>
+                            <TextInput
+                                type="datetime-local"
+                                id="paid_date"
+                                required
+                                value={data.paid_date}
+                                onChange={(e) => {
+                                    setData("paid_date", e.target.value);
+                                }}
+                                color={errors.paid_date && "failure"}
+                                helperText={errors.paid_date}
+                            ></TextInput>
+                        </div>
 
                         <div className="mb-2">
                             <div className="block">

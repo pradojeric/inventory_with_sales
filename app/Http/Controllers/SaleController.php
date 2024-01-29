@@ -77,6 +77,7 @@ class SaleController extends Controller
             'change_amount' => ['required', 'numeric', 'min:0'],
             'sale_date' => ['required', 'date'],
             'reference_no' => ['required_if:payment_method,gcash', 'required_if:payment_method,cheque', 'nullable'],
+            'due_date' => ['required_if:payment_method,account_receivable', 'nullable', 'date'],
         ]);
 
         DB::beginTransaction();
@@ -119,6 +120,7 @@ class SaleController extends Controller
             'sale_date' => $request->sale_date,
             'reference_no' => $request->reference_no,
             'user_id' => Auth::id(),
+            'due_date' => $request->due_date,
         ]);
 
         $sale->saleItems()->createMany($data);
@@ -201,12 +203,13 @@ class SaleController extends Controller
         $request->validate([
             'payment_method' => ['required'],
             'reference_no' => ['required_if:payment_method,gcash', 'required_if:payment_method,cheque', 'nullable'],
+            'paid_date' => ['required', 'date'],
         ]);
 
         $sale->update([
             'payment_type' => $request->payment_method,
             'reference_no' => $request->reference_no,
-            'paid_on' => now(),
+            'paid_on' => $request->paid_date,
             'paid' => 1,
         ]);
 

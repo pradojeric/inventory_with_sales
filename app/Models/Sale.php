@@ -18,6 +18,7 @@ class Sale extends Model
 
     protected $casts = [
         'sale_date' => 'date:Y-m-d',
+        'due_date' => 'date:Y-m-d',
     ];
 
     protected $with = ['user', 'cancelledBy'];

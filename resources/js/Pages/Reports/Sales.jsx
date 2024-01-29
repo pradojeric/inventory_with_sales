@@ -15,8 +15,9 @@ import {
 import { useEffect, useState } from "react";
 
 export default function SalesReport({ auth, flash, categories, sales }) {
-    const reports = ["All", "Daily", "Monthly", "Yearly"];
+    const reports = ["All", "Daily", "Monthly", "Yearly", "Custom"];
     const [date, setDate] = useState();
+    const [endDate, setEndDate] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
     const [selectedReport, setSelectedReport] = useState(0);
@@ -24,18 +25,20 @@ export default function SalesReport({ auth, flash, categories, sales }) {
 
     useEffect(() => {
         setDate(new Date().toISOString().split("T")[0]);
+        setEndDate(new Date().toISOString().split("T")[0]);
         setMonth(new Date().getMonth());
         setYear(new Date().getFullYear());
     }, []);
 
     useEffect(() => {
         getReport();
-    }, [date, selectedReport, month, year]);
+    }, [date, endDate, selectedReport, month, year]);
 
     const getReport = () => {
         router.reload({
             data: {
                 date: date,
+                endDate: endDate,
                 selectedReport: selectedReport,
                 month: month,
                 year: year,
@@ -142,6 +145,39 @@ export default function SalesReport({ auth, flash, categories, sales }) {
                 </div>
             );
         }
+
+        if (selectedReport == 4) {
+            return (
+                <>
+                    <div className="mb-2 ">
+                        <div className="block">
+                            <Label htmlFor="date" value="Date" />
+                        </div>
+                        <TextInput
+                            id="date"
+                            value={date}
+                            onChange={(e) => {
+                                setDate(e.target.value);
+                            }}
+                            type="date"
+                        />
+                    </div>
+                    <div className="mb-2 ">
+                        <div className="block">
+                            <Label htmlFor="endDate" value="End Date" />
+                        </div>
+                        <TextInput
+                            id="endDate"
+                            value={endDate}
+                            onChange={(e) => {
+                                setEndDate(e.target.value);
+                            }}
+                            type="date"
+                        />
+                    </div>
+                </>
+            );
+        }
     };
 
     return (
@@ -157,35 +193,39 @@ export default function SalesReport({ auth, flash, categories, sales }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-[70vh] overflow-y-visible">
                         <div className="p-6 text-gray-900">
                             {flash.message && (
                                 <Alert color="success">{flash.message}</Alert>
                             )}
 
-                            <div className="flex justify-end">
-                                <Button.Group>
-                                    {reports.map((report, index) => {
-                                        return (
-                                            <Button
-                                                key={`H` + index}
-                                                onClick={() => {
-                                                    setSelectedReport(index);
-                                                }}
-                                                color={
-                                                    selectedReport == index
-                                                        ? "blue"
-                                                        : "info"
-                                                }
-                                            >
-                                                {report}
-                                            </Button>
-                                        );
-                                    })}
-                                </Button.Group>
-                            </div>
+                            <div className="sticky top-0 bg-white z-10">
+                                <div className="flex justify-end">
+                                    <Button.Group>
+                                        {reports.map((report, index) => {
+                                            return (
+                                                <Button
+                                                    key={`H` + index}
+                                                    onClick={() => {
+                                                        setSelectedReport(
+                                                            index
+                                                        );
+                                                    }}
+                                                    color={
+                                                        selectedReport == index
+                                                            ? "blue"
+                                                            : "info"
+                                                    }
+                                                >
+                                                    {report}
+                                                </Button>
+                                            );
+                                        })}
+                                    </Button.Group>
+                                </div>
 
-                            {renderOptions()}
+                                {renderOptions()}
+                            </div>
 
                             <hr />
 

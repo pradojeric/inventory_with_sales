@@ -15,11 +15,13 @@ class HomeController extends Controller
         $year = $request->has('date') ? $request->date : date('Y');
         $sales = [];
 
+        $sale = Sale::query();
+
         for ($i = 1; $i <= 12; $i++) {
-            $sale = Sale::whereMonth('sale_date', $i)->whereYear('sale_date', $year);
+            $monthlySale = (clone $sale)->whereMonth('sale_date', $i)->whereYear('sale_date', $year);
             $currentDate = Carbon::createFromDate($year, $i, 1)->format('M');
-            $gross = (clone $sale)->sum('total_amount');
-            $receivables = (clone $sale)->where('payment_type', 'account_receivable')->sum('total_amount');
+            $gross = $monthlySale->sum('total_amount');
+            $receivables = $monthlySale->where('payment_type', 'account_receivable')->sum('total_amount');
 
             $sales[] = [
                 'name' => $currentDate,
@@ -36,13 +38,14 @@ class HomeController extends Controller
                 'name' => $category->name,
                 'quantity' => $category->products->sum('quantity'),
             ];
-
         }
+
+        $dueDates = $sale->whereNotNull('due_date')->orderBy('due_date')->get()->take(10);
 
         return Inertia::render('Dashboard', [
             'sales' => $sales,
             'stocks' => $stocks,
-
+            'due_dates' => $dueDates,
         ]);
     }
 }

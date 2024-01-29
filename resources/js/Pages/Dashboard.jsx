@@ -8,6 +8,7 @@ import {
     TextInput,
     Select,
     Alert,
+    Table,
 } from "flowbite-react";
 import { useEffect, useState } from "react";
 import {
@@ -27,7 +28,7 @@ import {
     Legend,
 } from "recharts";
 
-export default function Dashboard({ auth, sales, stocks }) {
+export default function Dashboard({ auth, sales, stocks, due_dates }) {
     const [date, setDate] = useState();
 
     useEffect(() => {
@@ -51,6 +52,13 @@ export default function Dashboard({ auth, sales, stocks }) {
         //     },
         //     only: ["sales"],
         // });
+    };
+
+    const isDue = (due_date) => {
+        const today = new Date().getTime();
+        const due = new Date(due_date).getTime();
+
+        return today > due;
     };
 
     const barcolors = [
@@ -172,40 +180,95 @@ export default function Dashboard({ auth, sales, stocks }) {
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
+                            <div className="grid grid-cols-2">
+                                <div className="border m-5 p-2">
+                                    <h3 className="text-center font-semibold uppercase tracking-wider text-lg">
+                                        Due Dates
+                                    </h3>
+                                    <div className="overflow-y-auto h-80">
+                                        <Table striped>
+                                            <Table.Head className="sticky top-0">
+                                                <Table.HeadCell>
+                                                    Customer
+                                                </Table.HeadCell>
+                                                <Table.HeadCell>
+                                                    Amount
+                                                </Table.HeadCell>
+                                                <Table.HeadCell>
+                                                    Due Date
+                                                </Table.HeadCell>
+                                            </Table.Head>
+                                            <Table.Body>
+                                                {due_dates.map((due, index) => {
+                                                    return (
+                                                        <Table.Row
+                                                            key={`due-` + index}
+                                                            className={
+                                                                isDue(
+                                                                    due.due_date
+                                                                )
+                                                                    ? `text-red-500 font-bold`
+                                                                    : ``
+                                                            }
+                                                        >
+                                                            <Table.Cell>
+                                                                {
+                                                                    due.customer_name
+                                                                }
+                                                            </Table.Cell>
+                                                            <Table.Cell>
+                                                                {formatNumber(
+                                                                    due.total_amount
+                                                                )}
+                                                            </Table.Cell>
+                                                            <Table.Cell>
+                                                                {due.due_date}
+                                                            </Table.Cell>
+                                                        </Table.Row>
+                                                    );
+                                                })}
+                                            </Table.Body>
+                                        </Table>
+                                    </div>
+                                </div>
+                                <div className="border m-5 p-2">
+                                    <ResponsiveContainer height={300}>
+                                        <PieChart>
+                                            <Tooltip />
+                                            <Pie
+                                                data={stocks}
+                                                dataKey="quantity"
+                                                nameKey="name"
+                                                cx="50%"
+                                                cy="50%"
+                                                outerRadius={100}
+                                                innerRadius={30}
+                                                label
+                                            >
+                                                {stocks.map((entry, index) => (
+                                                    <Cell
+                                                        key={`cell-${index}`}
+                                                        fill={
+                                                            barcolors[
+                                                                index % 20
+                                                            ]
+                                                        }
+                                                    />
+                                                ))}
+                                            </Pie>
 
-                            <div className="border m-5 p-2">
-                                <ResponsiveContainer height={300}>
-                                    <PieChart>
-                                        <Tooltip />
-                                        <Pie
-                                            data={stocks}
-                                            dataKey="quantity"
-                                            nameKey="name"
-                                            cx="50%"
-                                            cy="50%"
-                                            outerRadius={100}
-                                            innerRadius={30}
-                                            label
-                                        >
-                                            {stocks.map((entry, index) => (
-                                                <Cell
-                                                    key={`cell-${index}`}
-                                                    fill={barcolors[index % 20]}
-                                                />
-                                            ))}
-                                        </Pie>
+                                            <Legend
+                                                verticalAlign="bottom"
+                                                height={36}
+                                                margin={{ left: 20, right: 20 }}
+                                            />
+                                        </PieChart>
+                                    </ResponsiveContainer>
 
-                                        <Legend
-                                            verticalAlign="bottom"
-                                            height={36}
-                                            margin={{ left: 20, right: 20 }}
-                                        />
-                                    </PieChart>
-                                </ResponsiveContainer>
-
-                                <h3 className="text-center font-semibold uppercase tracking-wider text-lg">
-                                    Stocks
-                                </h3>
+                                    <h3 className="text-center font-semibold uppercase tracking-wider text-lg">
+                                        Stocks
+                                    </h3>
+                                </div>
                             </div>
                         </div>
                     </div>

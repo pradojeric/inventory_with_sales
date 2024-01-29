@@ -152,7 +152,7 @@ export default function Index({ auth, flash, sales, inputs }) {
                                                 Total Amount
                                             </Table.HeadCell>
                                             <Table.HeadCell>
-                                                Paid
+                                                Due Date
                                             </Table.HeadCell>
                                             <Table.HeadCell>
                                                 Created At
@@ -182,11 +182,7 @@ export default function Index({ auth, flash, sales, inputs }) {
                                                             )}
                                                         </Table.Cell>
                                                         <Table.Cell>
-                                                            {sale.paid
-                                                                ? sale.paid_on +
-                                                                  ` via ` +
-                                                                  sale.paid_via
-                                                                : ""}
+                                                            {sale.due_date}
                                                         </Table.Cell>
                                                         <Table.Cell>
                                                             {sale.created_at}
