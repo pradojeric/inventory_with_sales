@@ -37,7 +37,7 @@ export default function ProductIndex({ auth, flash, products, categories }) {
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Reports" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

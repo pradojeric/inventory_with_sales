@@ -34,7 +34,7 @@ export default function Index({ auth, flash, users }) {
                 </h2>
             }
         >
-            <Head title="Products" />
+            <Head title="Users" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -47,11 +47,13 @@ export default function Index({ auth, flash, users }) {
                                 show={addUser}
                                 onClose={handleAddUserClick}
                             />
-                            <EditUser
-                                user={selectedUser}
-                                show={editUser}
-                                onClose={handleEditUserClick}
-                            />
+                            {selectedUser && (
+                                <EditUser
+                                    user={selectedUser}
+                                    show={editUser}
+                                    onClose={handleEditUserClick}
+                                />
+                            )}
 
                             <div className="flex justify-end mb-2">
                                 <Button
