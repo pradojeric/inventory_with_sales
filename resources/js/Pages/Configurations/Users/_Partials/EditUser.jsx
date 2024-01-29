@@ -54,7 +54,7 @@ export default function EditUser({
             <Modal show={show} onClose={onClose} closeable={false}>
                 <div className="p-6 text-gray-900">
                     <h3 className="text-lg font-semibold text-gray-800 uppercase">
-                        Add Users
+                        Edit User
                     </h3>
 
                     <hr />
