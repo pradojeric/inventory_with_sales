@@ -21,9 +21,10 @@ export default function Index({ auth, flash, users }) {
         setEditUser((prev) => (prev = !prev));
     };
 
-    useEffect(() => {
+    const edit = (user) => {
+        setSelectedUser(user);
         handleEditUserClick();
-    }, [selectedUser]);
+    };
 
     return (
         <AuthenticatedLayout
@@ -47,13 +48,12 @@ export default function Index({ auth, flash, users }) {
                                 show={addUser}
                                 onClose={handleAddUserClick}
                             />
-                            {selectedUser && (
-                                <EditUser
-                                    user={selectedUser}
-                                    show={editUser}
-                                    onClose={handleEditUserClick}
-                                />
-                            )}
+
+                            <EditUser
+                                user={selectedUser}
+                                show={editUser}
+                                onClose={handleEditUserClick}
+                            />
 
                             <div className="flex justify-end mb-2">
                                 <Button
@@ -93,9 +93,7 @@ export default function Index({ auth, flash, users }) {
                                                         <button
                                                             type="button"
                                                             onClick={() => {
-                                                                setSelectedUser(
-                                                                    user
-                                                                );
+                                                                edit(user);
                                                             }}
                                                             className="font-medium text-cyan-600 hover:underline dark:text-cyan-500"
                                                         >
