@@ -52,6 +52,7 @@ export default function EditUser({
     return (
         <>
             <Modal show={show} onClose={onClose} closeable={false}>
+                <div className="w-screen"></div>
                 <div className="p-6 text-gray-900">
                     <h3 className="text-lg font-semibold text-gray-800 uppercase">
                         Edit User

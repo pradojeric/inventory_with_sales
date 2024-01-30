@@ -163,7 +163,7 @@ export default function SaleCreate({
                 ></Checkout>
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+                        <div className="p-6 text-gray-900 md:w-auto w-screen">
                             <Breadcrumb aria-label="Default breadcrumb example">
                                 <Breadcrumb.Item
                                     href={route("sales.index")}
@@ -181,8 +181,8 @@ export default function SaleCreate({
                                     Check out
                                 </Button>
                             </div>
-                            <div className="grid grid-cols-3 gap-4">
-                                <div className="border rounded shadow-sm col-span-2">
+                            <div className="grid md:grid-cols-3 gap-4">
+                                <div className="border rounded shadow-sm md:col-span-2">
                                     <div className="flex bg-gray-200 max-h-96 h-screen">
                                         <div className="flex flex-col divide-y">
                                             {categories.map((cat, index) => {

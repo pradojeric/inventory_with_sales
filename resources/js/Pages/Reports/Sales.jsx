@@ -194,17 +194,18 @@ export default function SalesReport({ auth, flash, categories, sales }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-[70vh] overflow-y-visible">
-                        <div className="p-6 text-gray-900">
+                        <div className="p-6 text-gray-900 md:w-auto w-screen">
                             {flash.message && (
                                 <Alert color="success">{flash.message}</Alert>
                             )}
 
-                            <div className="sticky top-0 bg-white z-10">
-                                <div className="flex justify-end">
+                            <div className="sticky top-0 z-10 border-b bg-white ">
+                                <div className="flex justify-end px-5 pb-5">
                                     <Button.Group>
                                         {reports.map((report, index) => {
                                             return (
                                                 <Button
+                                                    size="sm"
                                                     key={`H` + index}
                                                     onClick={() => {
                                                         setSelectedReport(
@@ -237,7 +238,7 @@ export default function SalesReport({ auth, flash, categories, sales }) {
 
                             {!loading && (
                                 <>
-                                    <div className="grid grid-cols-2 gap-4 pt-2">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 overflow-auto">
                                         {categories.map((category) => {
                                             return (
                                                 <div

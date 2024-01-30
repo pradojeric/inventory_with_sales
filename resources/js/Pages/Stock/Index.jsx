@@ -27,7 +27,7 @@ export default function StockIndex({ auth, flash, stocks }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-[70vh] overflow-y-visible">
                         <div className="p-6 text-gray-900">
                             <Breadcrumb aria-label="Default breadcrumb example">
                                 <Breadcrumb.Item
@@ -45,7 +45,7 @@ export default function StockIndex({ auth, flash, stocks }) {
                                     Add
                                 </Button>
                             </div>
-                            <div className="overflow-y-auto max-h-96">
+                            <div className="overflow-auto max-h-96 w-full">
                                 <Table striped>
                                     <Table.Head className="sticky top-0">
                                         <Table.HeadCell>

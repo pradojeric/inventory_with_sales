@@ -48,7 +48,7 @@ class Product extends Model
     public function lastDeliveryDate(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->stockProducts->count() > 0 ? $this->stockProducts->sortByDesc('created_at')->first()->stock->delivery_date->format('Y-m-d h:i a') : $this->updated_at->format('Y-m-d h:i a'),
+            get: fn() => $this->stockProducts->count() > 0 ? $this->stockProducts->sortByDesc('created_at')->first()->stock->delivery_date->format('Y-m-d h:i a') : $this->created_at->format('Y-m-d h:i a'),
         );
     }
 

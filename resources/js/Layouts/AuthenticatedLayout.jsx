@@ -1,74 +1,50 @@
 import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
-import { Sidebar } from "flowbite-react";
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { Navbar, Sidebar } from "flowbite-react";
 import {
-    HiArrowSmRight,
     HiChartPie,
-    HiInbox,
     HiShoppingBag,
-    HiTable,
-    HiViewBoards,
     HiTruck,
     HiUser,
     HiLogout,
     HiClipboardList,
-    HiCog,
 } from "react-icons/hi";
 import { GiReceiveMoney } from "react-icons/gi";
-import { FaBoxes } from "react-icons/fa";
+import { FaBoxes, FaUserEdit } from "react-icons/fa";
 
 export default function Authenticated({ user, header, children }) {
+    const [openSidebar, setOpenSidebar] = useState(false);
+
+    const handleOpenSidebar = () => {
+        setOpenSidebar((prev) => (prev = !prev));
+    };
+
     return (
-        <div className="bg-gray-100 max-h-screen overflow-hidden">
-            <Navbar fluid rounded className="sticky top-0">
-                <Navbar.Brand href="https://flowbite-react.com">
+        <div className="bg-gray-100 overflow-hidden">
+            <Navbar fluid rounded className="sticky top-0 z-40">
+                <Navbar.Brand>
                     <ApplicationLogo className="mr-3 h-6 sm:h-9" />
 
                     <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
                         Inventory with Sales
                     </span>
                 </Navbar.Brand>
-                <div className="flex md:order-2">
-                    <Dropdown
-                        arrowIcon={false}
-                        inline
-                        label={<ApplicationLogo className="mr-3 h-6 sm:h-9" />}
-                    >
-                        <Dropdown.Header>
-                            <span className="block text-sm">{user.name}</span>
-                            <span className="block truncate text-sm font-medium">
-                                {user.email}
-                            </span>
-                        </Dropdown.Header>
-                        <Dropdown.Item href={route("dashboard")}>
-                            Dashboard
-                        </Dropdown.Item>
-                        <Dropdown.Item href={route("profile.edit")}>
-                            Profile
-                        </Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item as="div">
-                            <Link
-                                className="block w-full text-start"
-                                href={route("logout")}
-                                method="post"
-                                as="button"
-                            >
-                                Sign Out
-                            </Link>
-                        </Dropdown.Item>
-                    </Dropdown>
-                    <Navbar.Toggle />
+
+                <div className="md:order-2 text-right">
+                    <Navbar.Toggle onClick={() => handleOpenSidebar()}>
+                        <div>{user.name}</div>
+                        <div>{user.email}</div>
+                    </Navbar.Toggle>
                 </div>
             </Navbar>
             <div className="flex w-full">
                 <Sidebar
                     aria-label="Sidebar with multi-level dropdown example"
-                    className="h-svh"
+                    className={
+                        "h-svh absolute sm:relative z-30 " +
+                        (openSidebar ? "" : "hidden sm:block")
+                    }
                 >
                     <Sidebar.Items>
                         <Sidebar.ItemGroup>
@@ -158,6 +134,13 @@ export default function Authenticated({ user, header, children }) {
                                     Users
                                 </Sidebar.Item>
                             )}
+                            <Sidebar.Item
+                                as={Link}
+                                href={route("profile.edit")}
+                                icon={FaUserEdit}
+                            >
+                                Profile
+                            </Sidebar.Item>
                             <Sidebar.Item as="div">
                                 <Link
                                     className="w-full text-start flex items-center"

@@ -1,15 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { formatNumber } from "@/Pages/Utilities/Util";
 import { Head, router } from "@inertiajs/react";
-import {
-    Button,
-    Label,
-    Checkbox,
-    TextInput,
-    Select,
-    Alert,
-    Table,
-} from "flowbite-react";
+import { TextInput, Table } from "flowbite-react";
 import { useEffect, useState } from "react";
 import {
     AreaChart,
@@ -46,12 +38,6 @@ export default function Dashboard({ auth, sales, stocks, due_dates }) {
 
     const handleDateChange = (e) => {
         setDate(e.target.value);
-        // router.reload({
-        //     data: {
-        //         date: date,
-        //     },
-        //     only: ["sales"],
-        // });
     };
 
     const isDue = (due_date) => {
@@ -91,7 +77,7 @@ export default function Dashboard({ auth, sales, stocks, due_dates }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg h-[70vh] overflow-y-visible">
                         <div className="p-6 text-gray-900 ">
-                            <div className="border m-5 p-2">
+                            <div className="border sm:m-5 p-2">
                                 <div className="flex justify-end">
                                     <TextInput
                                         type="number"
@@ -104,7 +90,7 @@ export default function Dashboard({ auth, sales, stocks, due_dates }) {
                                 <h3 className="text-center font-semibold uppercase tracking-wider text-lg">
                                     Sales of {date}
                                 </h3>
-                                <ResponsiveContainer height={500}>
+                                <ResponsiveContainer height={300}>
                                     <BarChart
                                         data={sales}
                                         margin={{
@@ -144,44 +130,19 @@ export default function Dashboard({ auth, sales, stocks, due_dates }) {
                                             stackId="a"
                                             fill="#82ca9d"
                                             strokeWidth={1}
-                                        >
-                                            {/* <LabelList
-                                                dataKey="sales"
-                                                position="top"
-                                                fontSize={10}
-                                                formatter={(
-                                                    value,
-                                                    name,
-                                                    props
-                                                ) => formatNumber(value)}
-                                            /> */}
-                                        </Bar>
+                                        ></Bar>
                                         <Bar
                                             type="monotone"
                                             dataKey="receivables"
                                             stackId="a"
                                             fill="#de2745"
                                             strokeWidth={1}
-                                        >
-                                            {/* <LabelList
-                                                dataKey="receivables"
-                                                position="top"
-                                                fontSize={10}
-                                                formatter={(
-                                                    value,
-                                                    name,
-                                                    props
-                                                ) => [
-                                                    formatNumber(value),
-                                                    "Receivables",
-                                                ]}
-                                            /> */}
-                                        </Bar>
+                                        ></Bar>
                                     </BarChart>
                                 </ResponsiveContainer>
                             </div>
-                            <div className="grid grid-cols-2">
-                                <div className="border m-5 p-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2">
+                                <div className="border sm:m-5 p-2">
                                     <h3 className="text-center font-semibold uppercase tracking-wider text-lg">
                                         Due Dates
                                     </h3>
@@ -231,7 +192,7 @@ export default function Dashboard({ auth, sales, stocks, due_dates }) {
                                         </Table>
                                     </div>
                                 </div>
-                                <div className="border m-5 p-2">
+                                <div className="border sm:m-5 p-2">
                                     <ResponsiveContainer height={300}>
                                         <PieChart>
                                             <Tooltip />

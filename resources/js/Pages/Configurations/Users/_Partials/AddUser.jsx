@@ -1,25 +1,16 @@
 import Modal from "@/Components/Modal";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "@inertiajs/react";
-import {
-    Button,
-    Checkbox,
-    Label,
-    Select,
-    Textarea,
-    TextInput,
-} from "flowbite-react";
-import { HiTrash } from "react-icons/hi";
+import { Button, Label, Select, TextInput } from "flowbite-react";
 
 export default function AddUser({ show = false, onClose = () => {} }) {
-    const { data, setData, post, processing, errors, reset, clearErrors } =
-        useForm({
-            name: "",
-            email: "",
-            role: "",
-            password: "",
-            password_confirmation: "",
-        });
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: "",
+        email: "",
+        role: "",
+        password: "",
+        password_confirmation: "",
+    });
 
     useEffect(() => {
         return () => {
@@ -38,6 +29,7 @@ export default function AddUser({ show = false, onClose = () => {} }) {
     return (
         <>
             <Modal show={show} onClose={onClose} closeable={false}>
+                <div className="w-screen"></div>
                 <div className="p-6 text-gray-900">
                     <h3 className="text-lg font-semibold text-gray-800 uppercase">
                         Add User

@@ -4,16 +4,113 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ReportController extends Controller
 {
-    public function productIndex()
+    public function productIndex(Request $request)
     {
+        $date = $request->has('date') ? $request->date : date('Y-m-d');
+        $endDate = $request->has('endDate') ? $request->endDate : date('Y-m-d');
+        $month = $request->has('month') ? $request->month : date('m');
+        $year = $request->has('year') ? $request->year : date('Y');
+        $selectedReport = $request->has('selectedReport') ? $request->selectedReport : null;
+
+        $products = Product::query();
+
+        if ($selectedReport == 1) {
+
+            $products = $products->with([
+                'saleItems' => function ($query) use ($date) {
+                    $query->whereHas('sale', function ($q) use ($date) {
+                        $q->whereDate('sale_date', $date);
+                    });
+                },
+                'stockProducts' => function ($query) use ($date) {
+                    $query->whereHas('stock', function ($q) use ($date) {
+                        $q->whereDate('delivery_date', $date);
+                    });
+                }]);
+        }
+
+        if ($selectedReport == 2) {
+            $products = $products->with([
+                'saleItems' => function ($query) use ($month, $year) {
+                    $query->whereHas('sale', function ($q) use ($month, $year) {
+                        $q->whereMonth('sale_date', ($month + 1))->whereYear('sale_date', $year);
+                    });
+                },
+                'stockProducts' => function ($query) use ($month, $year) {
+                    $query->whereHas('stock', function ($q) use ($month, $year) {
+                        $q->whereMonth('delivery_date', ($month + 1))->whereYear('delivery_date', $year);
+                    });
+                }]);
+        }
+
+        if ($selectedReport == 3) {
+            $products = $products->with([
+                'saleItems' => function ($query) use ($year) {
+                    $query->whereHas('sale', function ($q) use ($year) {
+                        $q->whereYear('sale_date', $year);
+                    });
+                },
+                'stockProducts' => function ($query) use ($year) {
+                    $query->whereHas('stock', function ($q) use ($year) {
+                        $q->whereDate('delivery_date', $year);
+                    });
+                }]);
+        }
+
+        if ($selectedReport == 4) {
+
+            $products = $products->with([
+                'saleItems' => function ($query) use ($date, $endDate) {
+                    $query->whereHas('sale', function ($q) use ($date, $endDate) {
+                        $q->whereDate('sale_date', '>', $date)->whereDate('sale_date', '<=', $endDate);
+                    });
+                },
+                'stockProducts' => function ($query) use ($date, $endDate) {
+                    $query->whereHas('stock', function ($q) use ($date, $endDate) {
+                        $q->whereDate('delivery_date', $date)->whereDate('delivery_date', '<=', $endDate);
+                    });
+
+                }]);
+        }
+
+        $products = $products->get()->map(function ($product) {
+            $category = $product->category;
+            $prod = [];
+
+            $name = $product->product_name;
+            $itemSold = $product->saleItems->sum('quantity');
+            $deliveredItem = $product->stockProducts->sum('quantity');
+            $remaining = $product->quantity;
+
+            $prod = [
+                'name' => $name,
+                'category' => $category,
+                'delivered_item' => $deliveredItem,
+                'item_sold' => $itemSold,
+                'remaining' => $remaining,
+            ];
+
+            return $prod;
+        })->groupBy(function ($cat) {
+            return ['id' => $cat['category']->id];
+        })->map(function ($cat) {
+
+            $category = $cat->pluck('category')->first()->toArray();
+            $category['products'] = $cat;
+
+            return $category;
+        });
+        // dd(Category::all());
+        // dd($products);
+
         return Inertia::render('Reports/Products', [
-            'categories' => Category::orderBy('name')->get(),
-            'products' => Product::orderBy('category_id')->get(),
+            'categories' => $products->values()->all(),
         ]);
     }
 

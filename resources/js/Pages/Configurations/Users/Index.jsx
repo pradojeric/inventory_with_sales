@@ -40,7 +40,7 @@ export default function Index({ auth, flash, users }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+                        <div className="p-6 text-gray-900 md:w-auto w-screen">
                             {flash.message && (
                                 <Alert color="success">{flash.message}</Alert>
                             )}
@@ -64,7 +64,7 @@ export default function Index({ auth, flash, users }) {
                                 </Button>
                             </div>
 
-                            <div className="overflow-y-auto max-h-96">
+                            <div className="overflow-auto max-h-96">
                                 <Table striped>
                                     <Table.Head className="top-0 sticky">
                                         <Table.HeadCell>Name</Table.HeadCell>

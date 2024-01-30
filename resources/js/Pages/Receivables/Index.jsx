@@ -77,7 +77,7 @@ export default function Index({ auth, flash, sales, inputs }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
+                        <div className="p-6 text-gray-900 md:w-auto w-screen">
                             <Breadcrumb aria-label="Default breadcrumb example">
                                 <Breadcrumb.Item
                                     href={route("sales.index")}
@@ -91,7 +91,7 @@ export default function Index({ auth, flash, sales, inputs }) {
                             )}
 
                             <div className="mb-2">
-                                <div className="flex space-x-2 items-end">
+                                <div className="flex flex-col md:flex-row md:space-x-2 space-y-2 md:items-end">
                                     <div className="">
                                         <div className="block">
                                             <Label
@@ -134,9 +134,10 @@ export default function Index({ auth, flash, sales, inputs }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="overflow-y-auto max-h-96">
-                                {loading && <Spinner />}
-                                {!loading && (
+
+                            {loading && <Spinner />}
+                            {!loading && (
+                                <div className="overflow-auto max-h-96">
                                     <Table striped>
                                         <Table.Head className="sticky top-0">
                                             <Table.HeadCell>
@@ -224,8 +225,8 @@ export default function Index({ auth, flash, sales, inputs }) {
                                             </Table.HeadCell>
                                         </Table.Head>
                                     </Table>
-                                )}
-                            </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -125,7 +125,7 @@ export default function StockCreate({
                                 </Button>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <div>
                                         <div className="mb-2 block">

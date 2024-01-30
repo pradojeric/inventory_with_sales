@@ -50,14 +50,15 @@ export default function Checkout({
 
     return (
         <>
-            <Modal show={show} onClose={onClose} maxWidth="3xl">
+            <Modal show={show} onClose={onClose}>
+                <div className="w-screen"></div>
                 <form>
-                    <div className="p-6 text-gray-900 h-full">
+                    <div className="p-6 text-gray-900">
                         <h3 className="font-semibold uppercase tracking-tighter">
                             Checkout
                         </h3>
                         <hr />
-                        <div className="h-auto my-2 grid grid-cols-2 gap-4">
+                        <div className="h-auto my-2 grid md:grid-cols-2 gap-4">
                             <div>
                                 <OrderList
                                     totalPrice={totalAmount}
