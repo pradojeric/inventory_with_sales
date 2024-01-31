@@ -42,7 +42,7 @@ export default function Welcome({
 
                 <div className="max-w-7xl mx-auto p-6 lg:p-8">
                     <div className="flex justify-center">
-                        <ApplicationLogo />
+                        <ApplicationLogo className="h-80 w-80 object-contain" />
                     </div>
                 </div>
             </div>

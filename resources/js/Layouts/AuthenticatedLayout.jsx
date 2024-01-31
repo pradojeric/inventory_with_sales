@@ -21,18 +21,27 @@ export default function Authenticated({ user, header, children }) {
     };
 
     return (
-        <div className="bg-gray-100 overflow-hidden">
-            <Navbar fluid rounded className="sticky top-0 z-40">
+        <div className="bg-gray-100 ">
+            <Navbar
+                fluid
+                rounded
+                className="sticky top-0 z-40 bg-[#6a0c96] rounded-none shadow-sm"
+            >
                 <Navbar.Brand>
-                    <ApplicationLogo className="mr-3 h-6 sm:h-9" />
+                    <ApplicationLogo className="mr-3 h-6 md:h-9" />
 
-                    <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                        Inventory with Sales
+                    <span className="self-center whitespace-nowrap text-xl font-semibold text-white">
+                        Inventory
                     </span>
                 </Navbar.Brand>
 
                 <div className="md:order-2 text-right">
-                    <Navbar.Toggle onClick={() => handleOpenSidebar()}>
+                    <Navbar.Toggle
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleOpenSidebar();
+                        }}
+                    >
                         <div>{user.name}</div>
                         <div>{user.email}</div>
                     </Navbar.Toggle>
@@ -42,8 +51,8 @@ export default function Authenticated({ user, header, children }) {
                 <Sidebar
                     aria-label="Sidebar with multi-level dropdown example"
                     className={
-                        "h-svh absolute sm:relative z-30 " +
-                        (openSidebar ? "" : "hidden sm:block")
+                        "h-lvh absolute sm:relative z-30 rounded-none sm:block " +
+                        (openSidebar ? "" : "hidden")
                     }
                 >
                     <Sidebar.Items>
@@ -91,7 +100,7 @@ export default function Authenticated({ user, header, children }) {
                                     active={route().current("stocks.*")}
                                     icon={HiTruck}
                                 >
-                                    Stock Up
+                                    Deliveries
                                 </Sidebar.Item>
                             )}
                             {(user.role == "admin" || user.role == "sales") && (

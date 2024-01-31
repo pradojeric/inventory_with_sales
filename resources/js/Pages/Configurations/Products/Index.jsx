@@ -71,7 +71,7 @@ export default function ProductIndex({ auth, flash, products, categories }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-sm sm:rounded-lg max-h-[70%] overflow-y-auto">
+                    <div className="bg-white overflow-hiden shadow-sm sm:rounded-lg max-h-[70vh] overflow-y-auto">
                         <div className="p-2 text-gray-900 md:w-auto w-screen">
                             {flash.message && (
                                 <Alert color="success">{flash.message}</Alert>
@@ -140,7 +140,7 @@ export default function ProductIndex({ auth, flash, products, categories }) {
                                     Clear
                                 </Button>
                             </div>
-                            <div className="overflow-y-auto max-h-96">
+                            <div className="overflow-x-auto max-h-full">
                                 <Table striped>
                                     <Table.Head className="top-0 sticky">
                                         <Table.HeadCell>

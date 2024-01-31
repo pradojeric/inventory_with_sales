@@ -44,6 +44,7 @@ export default function ViewStatus({
                 closeable={false}
                 maxWidth="md"
             >
+                <div className="w-screen"></div>
                 <form>
                     <div className="p-6 text-gray-900">
                         {sale?.order_no}

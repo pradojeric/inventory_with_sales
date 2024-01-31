@@ -193,7 +193,7 @@ export default function ProductIndex({ auth, flash, categories }) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white shadow-sm sm:rounded-lg h-[70vh] overflow-y-visible">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg overflow-y-visible md:max-h-[70vh]">
                         <div className="p-6 text-gray-900 md:w-auto w-screen">
                             {flash.message && (
                                 <Alert color="success">{flash.message}</Alert>
@@ -236,13 +236,10 @@ export default function ProductIndex({ auth, flash, categories }) {
 
                             {!loading && (
                                 <>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 overflow-auto">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
                                         {categories.map((category) => {
                                             return (
-                                                <div
-                                                    key={category.id}
-                                                    className="mb-5"
-                                                >
+                                                <div key={category.id}>
                                                     {category.name}
 
                                                     <Table striped>
