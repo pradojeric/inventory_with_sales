@@ -164,7 +164,7 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         // dd($sale);
-        $sale->update(['cancelled_by', Auth::id()]);
+        $sale->update(['cancelled_by' => Auth::id()]);
         foreach ($sale->saleItems as $saleItem) {
             Product::find($saleItem->product_id)->increment('quantity', $saleItem->quantity);
         }

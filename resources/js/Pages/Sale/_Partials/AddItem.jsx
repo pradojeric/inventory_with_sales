@@ -30,6 +30,7 @@ export default function AddItem({
             ...item,
             newPrice: item?.retail_price,
             totalQuantity: 1,
+            quantity: item?.quantity - 1,
         });
         setSelectedPrice(item?.retail_price);
         // setDiscountEnabled(false);
